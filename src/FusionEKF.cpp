@@ -108,6 +108,16 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
             cout << "EKF: 2" << endl;
         }
 
+        if(fabs(ekf_.x_[0]) < 0.0001 ){
+            ekf_.x_[0] = 0.01;
+            cout << "init px too small" << endl;
+        }
+
+        if(fabs(ekf_.x_[1]) < 0.0001 ){
+            ekf_.x_[1] = 0.01;
+            cout << "init py too small" << endl;
+        }
+
         // done initializing, no need to predict or update
         is_initialized_ = true;
         return;

@@ -76,6 +76,22 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     z_pred << rho, phi, rho_dot;
 
     VectorXd y = z - z_pred;
+
+    // normalize the angle of z-z_pred
+    // if phi is not in the range (-pi, pi), put it in that range
+    bool in_range = false;
+    while (in_range == false) {
+        if (y(1) > 3.14159) {
+            y(1) = y(1) - 6.2831;
+        }
+        else if (y(1) < -3.14159) {
+            y(1) = y(1) + 6.2831;
+        }
+        else {
+            in_range = true;
+        }
+    }
+
     MatrixXd Ht = H_.transpose();
     MatrixXd S = H_ * P_ * Ht + R_;
     MatrixXd Si = S.inverse();
