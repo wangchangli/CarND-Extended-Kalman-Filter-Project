@@ -147,6 +147,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     ekf_.F_(0, 2) = dt;
     ekf_.F_(1, 3) = dt;
 
+    // https://discussions.udacity.com/t/methodology-for-improving-ekf-rmse/381066/7
     float noise_ax = 6;
     float noise_ay = 6;
 
